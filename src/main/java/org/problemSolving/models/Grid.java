@@ -115,18 +115,37 @@ public class Grid {
 
         List<Integer> list = new ArrayList<>();
 
-        for (Square[] squares : grid) {
-            for (Square square : squares) {
+        int currentX = 0;
+        int currentY = 0;
 
-                for(Number[] numbers : square.square) {
-                    for (Number number : numbers) {
+        for (Square[] squares : grid) {
+
+            while (currentX < 3) {
+
+                for (int y = 0; y < grid.length; y++) {
+
+                    Square square = squares[y];
+
+                    while (currentY < 3) {
+
+                        Number number = square.square[currentX][currentY];
+
                         list.add(number.number);
+
+                        currentY++;
+
                     }
+
+                    currentY = 0;
+
                 }
 
+                currentX++;
             }
-        }
 
+            currentX = 0;
+
+        }
 
         return String.format(template, list.toArray());
 
