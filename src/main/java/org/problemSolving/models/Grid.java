@@ -14,6 +14,18 @@ public class Grid {
             {new Square(),new Square(),new Square()}
     };
 
+    public boolean isValid() {
+
+        for (Square[] rowSquares : grid) {
+            for (Square square : rowSquares) {
+                if(!square.isValid()) return false;
+            }
+        }
+
+        return true;
+
+    }
+
     public boolean isNumberValid(int xGrid, int yGrid, int xSquare, int ySquare) {
 
         Square targetedSquare = this.grid[xGrid][yGrid];
