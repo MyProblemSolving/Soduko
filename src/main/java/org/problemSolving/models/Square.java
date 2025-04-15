@@ -14,6 +14,26 @@ public class Square {
             {new Number(0),new Number(0),new Number(0)}
     };
 
+    // Square is valid when there is no duplication in it
+    public boolean isValid() {
+
+        List<Integer> list = new ArrayList<>();
+
+        for (Number[] numbers : square) {
+            for (Number number : numbers) {
+
+                if (list.contains(number.number)) {
+                    return false;
+                } else {
+                    list.add(number.number);
+                }
+
+            }
+        }
+
+        return true;
+    }
+
     // Check if there is no duplication in the square
     public boolean isNumberValid(int x, int y) {
         Number targetedNumber = square[x][y];
