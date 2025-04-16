@@ -1,7 +1,9 @@
 package org.problemSolving.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Grid extends XYTable<Square> {
 
@@ -18,9 +20,17 @@ public class Grid extends XYTable<Square> {
 
     public boolean isValid() {
 
-        for (Square[] rowSquares : data) {
-            for (Square square : rowSquares) {
-                if(!square.isValid()) return false;
+        for(int xGrid = 0; xGrid < SIZE; xGrid++) {
+            for(int yGrid = 0; yGrid < SIZE; yGrid++) {
+
+                for(int xSquare = 0; xSquare < SIZE; xSquare++) {
+                    for(int ySquare = 0; ySquare < SIZE; ySquare++) {
+
+                        if(!isNumberValid(xGrid, yGrid, xSquare, ySquare)) return false;
+
+                    }
+                }
+
             }
         }
 
@@ -73,7 +83,7 @@ public class Grid extends XYTable<Square> {
 
         Number targetedNumber = targetedSquare.get(xSquare, ySquare);
 
-        Square[] columnSquares = this.getColumn(yGrid);
+        Square[] columnSquares = getColumn(yGrid);
 
         for(Square square : columnSquares) {
             // i skip the square that the targetedNumber exists in
