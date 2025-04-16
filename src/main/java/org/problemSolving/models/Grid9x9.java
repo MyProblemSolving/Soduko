@@ -22,18 +22,11 @@ public class Grid9x9 extends XYTable<Square> {
 
     public boolean isValid() {
 
-        for(int j = 0; j < SIZE * SIZE; j++) {
-
-            for(int i = 0; i < Square.SIZE * Square.SIZE; i++) {
-
-                if(!isCellValid(j/SIZE, j%SIZE, i/Square.SIZE, i%Square.SIZE)) return false;
-
-            }
-
+        for(Cell cell : cells) {
+            if(!cell.isValid()) return false;
         }
 
         return true;
-
     }
 
     public boolean isCellValid(int xGrid, int yGrid, int xSquare, int ySquare) {
