@@ -22,7 +22,7 @@ public class Grid9x9Solver {
 
                 int number = gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare).number;
 
-                if(number != -1 && number != 0) {
+                if(number == 0) {
 
                     for(int validNumber = 1; validNumber <= 9; validNumber++) {
 
@@ -31,7 +31,7 @@ public class Grid9x9Solver {
                         if(gridToSolve.isNumberValid(xGrid, yGrid, xSquare, ySquare)) {
                             break;
                         } else {
-                            gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare).number = -1;
+                            gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare).number = 0;
                         }
 
                     }
