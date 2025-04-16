@@ -1,19 +1,23 @@
 package org.problemSolving.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Grid9x9 extends XYTable<Square> {
 
     public final static int SIZE = 3;
 
+    public final List<Cell> cells;
+
     public Grid9x9() {
         super(SIZE, SIZE);
-        data = new Square[][] {
+        this.data = new Square[][] {
             {new Square(0,this), new Square(1,this), new Square(2,this)},
             {new Square(3,this), new Square(4,this), new Square(5,this)},
             {new Square(6,this), new Square(7,this), new Square(8,this)}
         };
+        this.cells = Collections.unmodifiableList(getAllCells());
     }
 
     public boolean isValid() {
@@ -43,7 +47,7 @@ public class Grid9x9 extends XYTable<Square> {
         return validRow && validColumn && targetedSquare.isCellValid(xSquare, ySquare);
     }
 
-    public boolean isRowValid(int xGrid, int yGrid, int xSquare, int ySquare) {
+    private boolean isRowValid(int xGrid, int yGrid, int xSquare, int ySquare) {
 
         Square targetedSquare = get(xGrid,yGrid);
 
@@ -71,7 +75,7 @@ public class Grid9x9 extends XYTable<Square> {
         return true;
     }
 
-    public boolean isColumnValid(int xGrid, int yGrid, int xSquare, int ySquare) {
+    private boolean isColumnValid(int xGrid, int yGrid, int xSquare, int ySquare) {
 
         Square targetedSquare = get(xGrid,yGrid);
 
@@ -95,6 +99,19 @@ public class Grid9x9 extends XYTable<Square> {
         }
 
         return true;
+    }
+
+    private List<Cell> getAllCells() {
+
+        List<Cell> list = new ArrayList<>();
+
+        for(int j = 0; j < SIZE * SIZE; j++) {
+            for(int i = 0; i < Square.SIZE * Square.SIZE; i++) {
+                list.add(get(j/SIZE,j%SIZE).get(i/Square.SIZE,i%Square.SIZE));
+            }
+        }
+
+        return list;
     }
 
     @Override
