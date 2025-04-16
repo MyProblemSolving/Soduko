@@ -1,6 +1,7 @@
 package org.problemSolving.services;
 
 import lombok.AllArgsConstructor;
+import org.problemSolving.models.Cell;
 import org.problemSolving.models.Grid9x9;
 import org.problemSolving.models.Square;
 
@@ -27,9 +28,9 @@ public class Grid9x9Solver {
 
                 HistoryRecord lastRecord = history.getLast();
 
-                gridIndex = lastRecord.i;
-                squareIndex = lastRecord.j;
-                chosenCellNumber = lastRecord.chosenNumber + 1;
+                gridIndex = lastRecord.gridIndex;
+                squareIndex = lastRecord.squareIndex;
+                chosenCellNumber = lastRecord.chosenCellNumber + 1;
 
                 gridToSolve.get(gridIndex / Grid9x9.SIZE, gridIndex % Grid9x9.SIZE).get(squareIndex / Square.SIZE, squareIndex % Square.SIZE).number = 0;
 
@@ -48,19 +49,19 @@ public class Grid9x9Solver {
                     int xSquare = squareIndex / Square.SIZE;
                     int ySquare = squareIndex % Square.SIZE;
 
-                    int number = gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare).number;
+                    Cell currentCell = gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare);
 
-                    if(number == 0) {
+                    if(currentCell.isEmpty()) {
 
                         while(chosenCellNumber <= 9) {
 
-                            gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare).number = chosenCellNumber;
+                            currentCell.number = chosenCellNumber;
 
                             if(gridToSolve.isCellValid(xGrid, yGrid, xSquare, ySquare)) {
                                 history.add(new HistoryRecord(gridIndex, squareIndex, chosenCellNumber));
                                 break;
                             } else {
-                                gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare).number = 0;
+                                currentCell.number = 0;
                             }
 
                             chosenCellNumber++;
@@ -69,7 +70,7 @@ public class Grid9x9Solver {
 
                     }
 
-                    if(gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare).number == 0) {
+                    if(currentCell.isEmpty()) {
                         goBackInTimeAndFixHistory = true;
                         break gridLoop;
                     }
@@ -82,15 +83,13 @@ public class Grid9x9Solver {
 
         } while (goBackInTimeAndFixHistory);
 
-
-
     }
 
     @AllArgsConstructor
     static class HistoryRecord {
-        int i;
-        int j;
-        int chosenNumber;
+        int gridIndex;
+        int squareIndex;
+        int chosenCellNumber;
     }
 
 }
