@@ -15,11 +15,11 @@ public class Grid9x9Solver {
 
         boolean goBackInTimeAndFixHistory = false;
 
-        int i = 0;
+        int gridIndex = 0;
 
-        int j = 0;
+        int squareIndex = 0;
 
-        int validNumber = 1;
+        int chosenCellNumber = 1;
 
         do {
 
@@ -27,11 +27,11 @@ public class Grid9x9Solver {
 
                 HistoryRecord lastRecord = history.getLast();
 
-                i = lastRecord.i;
-                j = lastRecord.j;
-                validNumber = lastRecord.chosenNumber + 1;
+                gridIndex = lastRecord.i;
+                squareIndex = lastRecord.j;
+                chosenCellNumber = lastRecord.chosenNumber + 1;
 
-                gridToSolve.get(i / Grid9x9.SIZE, i % Grid9x9.SIZE).get(j / Square.SIZE, j % Square.SIZE).number = 0;
+                gridToSolve.get(gridIndex / Grid9x9.SIZE, gridIndex % Grid9x9.SIZE).get(squareIndex / Square.SIZE, squareIndex % Square.SIZE).number = 0;
 
                 history.removeLast();
 
@@ -39,33 +39,33 @@ public class Grid9x9Solver {
             }
 
             gridLoop:
-            while(i < Grid9x9.SIZE * Grid9x9.SIZE) {
-                while( j < Square.SIZE * Square.SIZE) {
+            while(gridIndex < Grid9x9.SIZE * Grid9x9.SIZE) {
+                while( squareIndex < Square.SIZE * Square.SIZE) {
 
-                    int xGrid = i / Grid9x9.SIZE;
-                    int yGrid = i % Grid9x9.SIZE;
+                    int xGrid = gridIndex / Grid9x9.SIZE;
+                    int yGrid = gridIndex % Grid9x9.SIZE;
 
-                    int xSquare = j / Square.SIZE;
-                    int ySquare = j % Square.SIZE;
+                    int xSquare = squareIndex / Square.SIZE;
+                    int ySquare = squareIndex % Square.SIZE;
 
                     int number = gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare).number;
 
                     if(number == 0) {
 
-                        while(validNumber <= 9) {
+                        while(chosenCellNumber <= 9) {
 
-                            gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare).number = validNumber;
+                            gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare).number = chosenCellNumber;
 
                             if(gridToSolve.isCellValid(xGrid, yGrid, xSquare, ySquare)) {
-                                history.add(new HistoryRecord(i, j, validNumber));
+                                history.add(new HistoryRecord(gridIndex, squareIndex, chosenCellNumber));
                                 break;
                             } else {
                                 gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare).number = 0;
                             }
 
-                            validNumber++;
+                            chosenCellNumber++;
                         }
-                        validNumber = 1;
+                        chosenCellNumber = 1;
 
                     }
 
@@ -74,10 +74,10 @@ public class Grid9x9Solver {
                         break gridLoop;
                     }
 
-                    j++;
+                    squareIndex++;
                 }
-                j = 0;
-                i++;
+                squareIndex = 0;
+                gridIndex++;
             }
 
         } while (goBackInTimeAndFixHistory);
