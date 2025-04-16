@@ -1,6 +1,5 @@
 package org.problemSolving.services;
 
-import lombok.AllArgsConstructor;
 import org.problemSolving.models.Cell;
 import org.problemSolving.models.Grid9x9;
 import org.problemSolving.models.Square;
@@ -10,7 +9,7 @@ import java.util.List;
 
 public class Grid9x9Solver {
 
-    private final List<HistoryRecord> history = new ArrayList<>();
+    private final List<Cell> cellHistory = new ArrayList<>();
 
     public void solve(Grid9x9 gridToSolve) {
 
@@ -26,15 +25,15 @@ public class Grid9x9Solver {
 
             if(goBackInTimeAndFixHistory) {
 
-                HistoryRecord lastRecord = history.getLast();
+                Cell lastCellRecord = cellHistory.getLast();
 
-                gridIndex = lastRecord.gridIndex;
-                squareIndex = lastRecord.squareIndex;
-                chosenCellNumber = lastRecord.chosenCellNumber + 1;
+                gridIndex = lastCellRecord.gridIndex;
+                squareIndex = lastCellRecord.squareIndex;
+                chosenCellNumber = lastCellRecord.number + 1;
 
-                gridToSolve.get(gridIndex / Grid9x9.SIZE, gridIndex % Grid9x9.SIZE).get(squareIndex / Square.SIZE, squareIndex % Square.SIZE).number = 0;
+                lastCellRecord.number = 0;
 
-                history.removeLast();
+                cellHistory.removeLast();
 
                 goBackInTimeAndFixHistory = false;
             }
@@ -58,7 +57,7 @@ public class Grid9x9Solver {
                             currentCell.number = chosenCellNumber;
 
                             if(gridToSolve.isCellValid(xGrid, yGrid, xSquare, ySquare)) {
-                                history.add(new HistoryRecord(gridIndex, squareIndex, chosenCellNumber));
+                                cellHistory.add(currentCell);
                                 break;
                             } else {
                                 currentCell.number = 0;
@@ -83,13 +82,6 @@ public class Grid9x9Solver {
 
         } while (goBackInTimeAndFixHistory);
 
-    }
-
-    @AllArgsConstructor
-    static class HistoryRecord {
-        int gridIndex;
-        int squareIndex;
-        int chosenCellNumber;
     }
 
 }
