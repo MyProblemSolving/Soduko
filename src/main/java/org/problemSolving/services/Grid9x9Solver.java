@@ -56,7 +56,7 @@ public class Grid9x9Solver {
 
                             gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare).number = validNumber;
 
-                            if(gridToSolve.isNumberValid(xGrid, yGrid, xSquare, ySquare)) {
+                            if(gridToSolve.isCellValid(xGrid, yGrid, xSquare, ySquare)) {
                                 history.add(new HistoryRecord(i, j, validNumber));
                                 break;
                             } else {

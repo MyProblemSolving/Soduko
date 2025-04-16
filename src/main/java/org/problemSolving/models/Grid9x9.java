@@ -22,7 +22,7 @@ public class Grid9x9 extends XYTable<Square> {
 
             for(int i = 0; i < Square.SIZE * Square.SIZE; i++) {
 
-                if(!isNumberValid(j/SIZE, j%SIZE, i/Square.SIZE, i%Square.SIZE)) return false;
+                if(!isCellValid(j/SIZE, j%SIZE, i/Square.SIZE, i%Square.SIZE)) return false;
 
             }
 
@@ -32,7 +32,7 @@ public class Grid9x9 extends XYTable<Square> {
 
     }
 
-    public boolean isNumberValid(int xGrid, int yGrid, int xSquare, int ySquare) {
+    public boolean isCellValid(int xGrid, int yGrid, int xSquare, int ySquare) {
 
         Square targetedSquare = get(xGrid,yGrid);
 
@@ -40,14 +40,14 @@ public class Grid9x9 extends XYTable<Square> {
 
         boolean validColumn = isColumnValid(xGrid, yGrid, xSquare, ySquare);
 
-        return validRow && validColumn && targetedSquare.isNumberValid(xSquare, ySquare);
+        return validRow && validColumn && targetedSquare.isCellValid(xSquare, ySquare);
     }
 
     public boolean isRowValid(int xGrid, int yGrid, int xSquare, int ySquare) {
 
         Square targetedSquare = get(xGrid,yGrid);
 
-        Number targetedNumber = targetedSquare.get(xSquare,ySquare);
+        Cell targetedCell = targetedSquare.get(xSquare,ySquare);
 
         Square[] rowSquares = this.getRow(xGrid);
 
@@ -56,10 +56,10 @@ public class Grid9x9 extends XYTable<Square> {
             // i skip the square that the targetedNumber exists in
             if(targetedSquare != square) {
 
-                Number[] rowNumberOfSquare = square.getRow(xSquare);
+                Cell[] rowSquare = square.getRow(xSquare);
 
-                for(Number number : rowNumberOfSquare) {
-                    if (targetedNumber.number == number.number) {
+                for(Cell cell : rowSquare) {
+                    if (targetedCell.number == cell.number) {
                         return false;
                     }
                 }
@@ -75,7 +75,7 @@ public class Grid9x9 extends XYTable<Square> {
 
         Square targetedSquare = get(xGrid,yGrid);
 
-        Number targetedNumber = targetedSquare.get(xSquare, ySquare);
+        Cell targetedCell = targetedSquare.get(xSquare, ySquare);
 
         Square[] columnSquares = getColumn(yGrid);
 
@@ -83,10 +83,10 @@ public class Grid9x9 extends XYTable<Square> {
             // i skip the square that the targetedNumber exists in
             if(targetedSquare != square) {
 
-                Number[] columnNumberOfSquare = square.getColumn(ySquare);
+                Cell[] columnCellOfSquare = square.getColumn(ySquare);
 
-                for(Number number : columnNumberOfSquare) {
-                    if (targetedNumber.number == number.number) {
+                for(Cell cell : columnCellOfSquare) {
+                    if (targetedCell.number == cell.number) {
                         return false;
                     }
                 }
@@ -131,9 +131,9 @@ public class Grid9x9 extends XYTable<Square> {
 
                     while (currentY < Square.SIZE) {
 
-                        Number number = square.get(currentX, currentY);
+                        Cell cell = square.get(currentX, currentY);
 
-                        list.add(number.number);
+                        list.add(cell.number);
 
                         currentY++;
 

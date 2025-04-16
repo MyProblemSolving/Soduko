@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor
-public class Number {
-    public int number = 0;
+public class Cell {
+    public static final int EMPTY = 0;
+    public int number = EMPTY;
 }

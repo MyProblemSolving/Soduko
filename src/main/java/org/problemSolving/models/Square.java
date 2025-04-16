@@ -3,16 +3,16 @@ package org.problemSolving.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Square extends XYTable<Number> {
+public class Square extends XYTable<Cell> {
 
     public final static int SIZE = 3;
 
     public Square() {
         super(SIZE, SIZE);
-        data = new Number[][] {
-            {new Number(1), new Number(2), new Number(3)},
-            {new Number(4), new Number(5), new Number(6)},
-            {new Number(7), new Number(8), new Number(9)}
+        data = new Cell[][] {
+            {new Cell(1), new Cell(2), new Cell(3)},
+            {new Cell(4), new Cell(5), new Cell(6)},
+            {new Cell(7), new Cell(8), new Cell(9)}
         };
     }
 
@@ -21,13 +21,13 @@ public class Square extends XYTable<Number> {
 
         List<Integer> list = new ArrayList<>();
 
-        for (Number[] numbers : data) {
-            for (Number number : numbers) {
+        for (Cell[] cells : data) {
+            for (Cell cell : cells) {
 
-                if (list.contains(number.number)) {
+                if (list.contains(cell.number)) {
                     return false;
                 } else {
-                    list.add(number.number);
+                    list.add(cell.number);
                 }
 
             }
@@ -37,14 +37,14 @@ public class Square extends XYTable<Number> {
     }
 
     // Check if there is no duplication in the square
-    public boolean isNumberValid(int x, int y) {
-        Number targetedNumber = get(x,y);
+    public boolean isCellValid(int x, int y) {
+        Cell targetedCell = get(x,y);
 
-        for (Number[] numbers : data) {
+        for (Cell[] cells : data) {
 
-            for(Number squareNumber : numbers) {
+            for(Cell squareCell : cells) {
                 // squareNumber != targetedNumber: i use reference to skip the targeted number
-                if(squareNumber != targetedNumber && squareNumber.number == targetedNumber.number ) {
+                if(squareCell != targetedCell && squareCell.number == targetedCell.number ) {
                     return false;
                 }
             }
