@@ -15,10 +15,6 @@ public class Grid9x9Solver {
 
         boolean goBackInTimeAndFixHistory = false;
 
-        int gridIndex = 0;
-
-        int squareIndex = 0;
-
         int chosenCellNumber = 1;
 
         do {
@@ -27,8 +23,6 @@ public class Grid9x9Solver {
 
                 Cell lastCellRecord = cellHistory.getLast();
 
-                gridIndex = lastCellRecord.gridIndex;
-                squareIndex = lastCellRecord.squareIndex;
                 chosenCellNumber = lastCellRecord.number + 1;
 
                 lastCellRecord.number = 0;
@@ -38,50 +32,42 @@ public class Grid9x9Solver {
                 goBackInTimeAndFixHistory = false;
             }
 
-            gridLoop:
-            while(gridIndex < Grid9x9.SIZE * Grid9x9.SIZE) {
-                while( squareIndex < Square.SIZE * Square.SIZE) {
+            for(Cell cell : gridToSolve.cells) {
 
-                    int xGrid = gridIndex / Grid9x9.SIZE;
-                    int yGrid = gridIndex % Grid9x9.SIZE;
+                if(cell.isEmpty()) {
 
-                    int xSquare = squareIndex / Square.SIZE;
-                    int ySquare = squareIndex % Square.SIZE;
+                    boolean isAbleToChooseNumber = chooseNumberForCell(cell, chosenCellNumber);
 
-                    Cell currentCell = gridToSolve.get(xGrid, yGrid).get(xSquare, ySquare);
-
-                    if(currentCell.isEmpty()) {
-
-                        while(chosenCellNumber <= 9) {
-
-                            currentCell.number = chosenCellNumber;
-
-                            if(gridToSolve.isCellValid(xGrid, yGrid, xSquare, ySquare)) {
-                                cellHistory.add(currentCell);
-                                break;
-                            } else {
-                                currentCell.number = 0;
-                            }
-
-                            chosenCellNumber++;
-                        }
-                        chosenCellNumber = 1;
-
-                    }
-
-                    if(currentCell.isEmpty()) {
+                    if(!isAbleToChooseNumber) {
                         goBackInTimeAndFixHistory = true;
-                        break gridLoop;
+                        break;
                     }
 
-                    squareIndex++;
+                    chosenCellNumber = 1;
                 }
-                squareIndex = 0;
-                gridIndex++;
+
             }
 
         } while (goBackInTimeAndFixHistory);
 
+    }
+
+    private boolean chooseNumberForCell(Cell cell , int startNumber) {
+
+        for(int i = startNumber; i <= 9; i++) {
+
+            cell.number = i;
+
+            if(cell.isValid()) {
+                cellHistory.add(cell);
+                return true;
+            } else {
+                cell.number = Cell.EMPTY;
+            }
+
+        }
+
+        return false;
     }
 
 }
