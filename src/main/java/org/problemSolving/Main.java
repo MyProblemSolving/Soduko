@@ -16,7 +16,7 @@ public class Main {
 
         Grid grid = new Grid();
 
-        try(InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("soduko-examples.json")){
+        try(InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("sudoku-9x9-solved-example-0.json")){
 
             JSONObject obj = new JSONObject(new JSONTokener(in));
 

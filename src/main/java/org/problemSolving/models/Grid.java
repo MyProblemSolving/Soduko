@@ -18,18 +18,14 @@ public class Grid extends XYTable<Square> {
 
     public boolean isValid() {
 
-        for(int xGrid = 0; xGrid < SIZE; xGrid++) {
-            for(int yGrid = 0; yGrid < SIZE; yGrid++) {
+        for(int j = 0; j < SIZE * SIZE; j++) {
 
-                for(int xSquare = 0; xSquare < SIZE; xSquare++) {
-                    for(int ySquare = 0; ySquare < SIZE; ySquare++) {
+            for(int i = 0; i < Square.SIZE * Square.SIZE; i++) {
 
-                        if(!isNumberValid(xGrid, yGrid, xSquare, ySquare)) return false;
-
-                    }
-                }
+                if(!isNumberValid(j/SIZE, j%SIZE, i/Square.SIZE, i%Square.SIZE)) return false;
 
             }
+
         }
 
         return true;
