@@ -10,9 +10,9 @@ public class Grid9x9 extends XYTable<Square> {
     public Grid9x9() {
         super(SIZE, SIZE);
         data = new Square[][] {
-            {new Square(0), new Square(1), new Square(2)},
-            {new Square(3), new Square(4), new Square(5)},
-            {new Square(6), new Square(7), new Square(8)}
+            {new Square(0,this), new Square(1,this), new Square(2,this)},
+            {new Square(3,this), new Square(4,this), new Square(5,this)},
+            {new Square(6,this), new Square(7,this), new Square(8,this)}
         };
     }
 

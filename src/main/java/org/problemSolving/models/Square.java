@@ -7,12 +7,12 @@ public class Square extends XYTable<Cell> {
 
     public final static int SIZE = 3;
 
-    public Square(int gridIndex) {
+    public Square(int gridIndex, Grid9x9 grid) {
         super(SIZE, SIZE);
         data = new Cell[][] {
-            {new Cell(gridIndex,0), new Cell(gridIndex,1), new Cell(gridIndex,2)},
-            {new Cell(gridIndex,3), new Cell(gridIndex,4), new Cell(gridIndex,5)},
-            {new Cell(gridIndex,6), new Cell(gridIndex,7), new Cell(gridIndex,8)}
+            {new Cell(gridIndex,0, grid), new Cell(gridIndex,1, grid), new Cell(gridIndex,2, grid)},
+            {new Cell(gridIndex,3, grid), new Cell(gridIndex,4, grid), new Cell(gridIndex,5, grid)},
+            {new Cell(gridIndex,6, grid), new Cell(gridIndex,7, grid), new Cell(gridIndex,8, grid)}
         };
     }
 

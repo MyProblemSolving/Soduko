@@ -10,11 +10,10 @@ public class Cell {
 
     public int squareIndex;
 
-    public Cell(int number) {
-        this.number = number;
-    }
+    public final Grid9x9 grid;
 
-    public Cell(int gridIndex, int squareIndex) {
+    public Cell(int gridIndex, int squareIndex, Grid9x9 grid) {
+        this.grid = grid;
         this.gridIndex = gridIndex;
         this.squareIndex = squareIndex;
     }
