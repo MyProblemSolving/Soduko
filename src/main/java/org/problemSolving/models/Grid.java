@@ -1,22 +1,24 @@
 package org.problemSolving.models;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor @AllArgsConstructor
-public class Grid {
-    public Square[][] grid = {
-            {new Square(),new Square(),new Square()},
-            {new Square(),new Square(),new Square()},
-            {new Square(),new Square(),new Square()}
-    };
+public class Grid extends XYTable<Square> {
+
+    public final static int SIZE = 3;
+
+    public Grid() {
+        super(SIZE, SIZE);
+        data = new Square[][] {
+            {new Square(), new Square(), new Square()},
+            {new Square(), new Square(), new Square()},
+            {new Square(), new Square(), new Square()}
+        };
+    }
 
     public boolean isValid() {
 
-        for (Square[] rowSquares : grid) {
+        for (Square[] rowSquares : data) {
             for (Square square : rowSquares) {
                 if(!square.isValid()) return false;
             }
@@ -28,7 +30,7 @@ public class Grid {
 
     public boolean isNumberValid(int xGrid, int yGrid, int xSquare, int ySquare) {
 
-        Square targetedSquare = this.grid[xGrid][yGrid];
+        Square targetedSquare = get(xGrid,yGrid);
 
         boolean validRow = isRowValid(xGrid, yGrid, xSquare, ySquare);
 
@@ -39,9 +41,9 @@ public class Grid {
 
     public boolean isRowValid(int xGrid, int yGrid, int xSquare, int ySquare) {
 
-        Square targetedSquare = this.grid[xGrid][yGrid];
+        Square targetedSquare = get(xGrid,yGrid);
 
-        Number targetedNumber = targetedSquare.square[xSquare][ySquare];
+        Number targetedNumber = targetedSquare.get(xSquare,ySquare);
 
         Square[] rowSquares = this.getRow(xGrid);
 
@@ -67,9 +69,9 @@ public class Grid {
 
     public boolean isColumnValid(int xGrid, int yGrid, int xSquare, int ySquare) {
 
-        Square targetedSquare = this.grid[xGrid][yGrid];
+        Square targetedSquare = get(xGrid,yGrid);
 
-        Number targetedNumber = targetedSquare.square[xSquare][ySquare];
+        Number targetedNumber = targetedSquare.get(xSquare, ySquare);
 
         Square[] columnSquares = this.getColumn(yGrid);
 
@@ -89,21 +91,6 @@ public class Grid {
         }
 
         return true;
-    }
-
-    public Square[] getRow(int x) {
-        return grid[x];
-    }
-
-    public Square[] getColumn(int y) {
-
-        List<Square> columSquares = new ArrayList<>();
-
-        for(Square[] rowSquares : grid) {
-            columSquares.add(rowSquares[y]);
-        }
-
-        return columSquares.toArray(new Square[grid.length]);
     }
 
     @Override
@@ -130,17 +117,17 @@ public class Grid {
         int currentX = 0;
         int currentY = 0;
 
-        for (Square[] squares : grid) {
+        for (Square[] squares : data) {
 
-            while (currentX < 3) {
+            while (currentX < Square.SIZE) {
 
-                for (int y = 0; y < grid.length; y++) {
+                for (int y = 0; y < Square.SIZE; y++) {
 
                     Square square = squares[y];
 
-                    while (currentY < 3) {
+                    while (currentY < Square.SIZE) {
 
-                        Number number = square.square[currentX][currentY];
+                        Number number = square.get(currentX, currentY);
 
                         list.add(number.number);
 
