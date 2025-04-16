@@ -5,10 +5,15 @@ import java.util.List;
 
 public class Square extends XYTable<Number> {
 
-    private final static int SIZE = 3;
+    public final static int SIZE = 3;
 
     public Square() {
         super(SIZE, SIZE);
+        data = new Number[][] {
+            {new Number(1), new Number(2), new Number(3)},
+            {new Number(4), new Number(5), new Number(6)},
+            {new Number(7), new Number(8), new Number(9)}
+        };
     }
 
     // Square is valid when there is no duplication in it
