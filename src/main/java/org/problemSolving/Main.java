@@ -1,8 +1,6 @@
 package org.problemSolving;
 
-import org.problemSolving.models.Number;
-import org.problemSolving.models.Square;
-
+import org.problemSolving.models.Grid;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -10,15 +8,12 @@ public class Main {
 
     public static void process() {
 
-        Number[][] data = {
-                {new Number(1),new Number(2),new Number(3)},
-                {new Number(4),new Number(5),new Number(6)},
-                {new Number(9),new Number(8),new Number(7)}
-        };
+        Grid grid = new Grid();
 
-        Square square = new Square(data);
+        grid.get(2,1).get(0,2).number = 3;
 
-        System.out.println(square.isValid());
+        System.out.println(grid);
+        System.out.println(grid.isValid());
 
     }
 
