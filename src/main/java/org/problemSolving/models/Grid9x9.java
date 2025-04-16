@@ -3,11 +3,11 @@ package org.problemSolving.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Grid extends XYTable<Square> {
+public class Grid9x9 extends XYTable<Square> {
 
     public final static int SIZE = 3;
 
-    public Grid() {
+    public Grid9x9() {
         super(SIZE, SIZE);
         data = new Square[][] {
             {new Square(), new Square(), new Square()},
