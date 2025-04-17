@@ -30,14 +30,13 @@ public class Main {
 
         System.out.println("Grid before solving:");
         System.out.println(grid9x9);
-        System.out.println(grid9x9.isValid());
 
         Grid9x9Solver grid9x9Solver = new Grid9x9Solver();
         grid9x9Solver.solve(grid9x9);
 
         System.out.println("Grid after solving:");
         System.out.println(grid9x9);
-        System.out.println(grid9x9.isValid());
+
     }
 
     public static void checkIfGridIsSolved(String jsonNameFile) throws IOException {
