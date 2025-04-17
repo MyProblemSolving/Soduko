@@ -2,7 +2,6 @@ package org.problemSolving.services;
 
 import org.problemSolving.models.Cell;
 import org.problemSolving.models.Grid9x9;
-import org.problemSolving.models.Square;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class Grid9x9Solver {
 
                 chosenCellNumber = lastCellRecord.number + 1;
 
-                lastCellRecord.number = 0;
+                lastCellRecord.number = Cell.EMPTY;
 
                 cellHistory.removeLast();
 
