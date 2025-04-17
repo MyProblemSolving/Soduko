@@ -1,11 +1,15 @@
 package org.problemSolving;
 
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.problemSolving.models.Grid9x9;
+import org.problemSolving.services.ConvertImageToBlackAndWhite;
 import org.problemSolving.services.Grid9x9Solver;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
@@ -13,11 +17,36 @@ import java.time.LocalDateTime;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, TesseractException {
 
         LocalDateTime start = LocalDateTime.now();
+
+        String inputFile = "C:\\Projects\\problem-solving\\soduko\\src\\main\\resources\\sudoku-9x9-unsolved-example-1.png";
+
+        String outputFile = "C:\\Projects\\problem-solving\\soduko\\src\\main\\resources\\sudoku-9x9-unsolved-example-1-black-&-white.png";
+
+        ConvertImageToBlackAndWhite.convert(inputFile, outputFile, "png");
+
+        File file = new File(outputFile);
+
+        Tesseract tesseract = new Tesseract();
+
+        tesseract.setVariable("tessedit_char_whitelist", "123456789");
+
+        tesseract.setDatapath("C:\\Projects\\problem-solving\\soduko\\src\\main\\resources\\traineddata");
+
+        tesseract.setPageSegMode(6);
+
+        tesseract.setOcrEngineMode(1);
+
+        String result = tesseract.doOCR(file);
+
+        System.out.println(result);
+
 //        checkIfGridIsSolved("sudoku-9x9-solved-example-0.json");
-        solveGrid("sudoku-9x9-unsolved-example-0.json");
+//        solveGrid("sudoku-9x9-unsolved-example-0.json");
+
+
         LocalDateTime end = LocalDateTime.now();
 
         System.out.println(Duration.between(start, end));
